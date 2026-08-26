@@ -1,0 +1,37 @@
+name: Fetch NAV History
+
+on:
+  workflow_dispatch: {}
+  schedule:
+    # 08:00 UTC (~13:30 IST), Monday to Friday
+    - cron: "0 8 * * 1-5"
+
+permissions:
+  contents: write
+
+jobs:
+  fetch-nav:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Fetch NAV history
+        run: python fetch_nav_history.py
+
+      - name: Commit and push nav_history.csv
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- nav_history.csv; then
+            echo "No changes to nav_history.csv"
+          else
+            git add nav_history.csv
+            git commit -m "Update NAV history $(date -u +%Y-%m-%d)"
+            git push
+          fi
