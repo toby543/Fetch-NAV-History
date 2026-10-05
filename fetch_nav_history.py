@@ -47,7 +47,7 @@ FUNDS = [
      ["mirae"], ["tax saver", "elss"], [], 56.33),
     ("SBI Large Cap Fund", ["SBI Large Cap Fund Direct Growth", "SBI Bluechip Fund Direct Growth"],
      ["sbi"], ["large cap", "bluechip"], ["large mid", "large midcap"], 102.95),
-    ("Nippon India ELSS Tax Saver Fund", ["Nippon India ELSS Tax Saver Fund Direct Growth", "Nippon India Tax Saver Fund Direct Growth"],
+    ("Nippon India ELSS Tax Saver Fund", ["Nippon India ELSS Tax Saver Fund Growth", "Nippon India Tax Saver Fund Growth", "Nippon India ELSS Tax Saver Fund Direct Growth"],
      ["nippon"], ["tax saver", "elss"], [], 129.26),
     ("Kotak Flexicap Fund", ["Kotak Flexicap Fund Direct Growth", "Kotak Flexi Cap Fund Direct Growth"],
      ["kotak"], ["flexicap", "flexi cap"], [], 95.50),
@@ -59,7 +59,7 @@ FUNDS = [
      ["hdfc"], ["nifty 50 plan", "nifty 50 index"], [], 232.39),
     ("HDFC Mid Cap Fund", ["HDFC Mid Cap Fund Direct Growth", "HDFC Mid-Cap Opportunities Fund Direct Growth"],
      ["hdfc", "mid cap"], [], ["index"], 227.32),
-    ("UTI Children's Hybrid Fund", ["UTI Children's Hybrid Fund Growth", "UTI Children's Career Fund Savings Plan"],
+    ("UTI Children's Hybrid Fund", ["UTI Children's Hybrid Fund Growth", "UTI Childrens Hybrid Fund", "UTI Children's Career Fund Savings Plan"],
      ["uti", "children"], [], [], 40.31),
     ("Parag Parikh ELSS Tax Saver Fund", ["Parag Parikh ELSS Tax Saver Fund Direct Growth", "Parag Parikh Tax Saver Fund Direct Growth"],
      ["parag parikh"], ["tax saver", "elss"], [], 31.78),
@@ -98,13 +98,21 @@ def fetch_json(url):
     raise RuntimeError(f"Failed to fetch {url}: {last_error}")
 
 
-def plausible(name, must, anyof, exclude, want_direct=True):
+# Holdings.csv lists these two as "Standard" (i.e. Regular) plans, not Direct.
+REGULAR_PLAN_FUNDS = {"Nippon India ELSS Tax Saver Fund", "UTI Children's Hybrid Fund"}
+
+
+def plausible(name, must, anyof, exclude, want_direct=True, regular=False):
     n = norm(name)
-    if any(b in n.split() or b in n for b in BAD_WORDS):
+    bad = [b for b in BAD_WORDS if not (regular and b == "regular")]
+    if any(b in n for b in bad):
         return False
     if "growth" not in n:
         return False
-    if want_direct and "direct" not in n:
+    if regular:
+        if "direct" in n:
+            return False
+    elif want_direct and "direct" not in n:
         return False
     if not all(m in n for m in must):
         return False
@@ -115,7 +123,7 @@ def plausible(name, must, anyof, exclude, want_direct=True):
     return True
 
 
-def candidates(queries, must, anyof, exclude, want_direct=True):
+def candidates(queries, must, anyof, exclude, want_direct=True, regular=False):
     seen = {}
     for q in queries:
         try:
@@ -124,7 +132,7 @@ def candidates(queries, must, anyof, exclude, want_direct=True):
             print(f"    search error for '{q}': {error}", file=sys.stderr)
             continue
         for r in results or []:
-            if plausible(r["schemeName"], must, anyof, exclude, want_direct):
+            if plausible(r["schemeName"], must, anyof, exclude, want_direct, regular):
                 seen.setdefault(r["schemeCode"], r["schemeName"])
     return list(seen.items())[:MAX_CANDIDATES]
 
@@ -153,8 +161,9 @@ def nav_on_or_before(history, target):
 
 def pick(name, queries, must, anyof, exclude, ref_nav):
     """Return (code, scheme_name, history, nav_at_ref, pct_diff) or None."""
-    cands = candidates(queries, must, anyof, exclude, want_direct=True)
-    if not cands:
+    regular = name in REGULAR_PLAN_FUNDS
+    cands = candidates(queries, must, anyof, exclude, want_direct=True, regular=regular)
+    if not cands and not regular:
         # Some holdings are "Standard" (non-direct) plans; retry without requiring Direct.
         cands = candidates(queries, must, anyof, exclude, want_direct=False)
     best = None
