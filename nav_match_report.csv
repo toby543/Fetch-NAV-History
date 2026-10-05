@@ -1,0 +1,21 @@
+fund,scheme_code,scheme_name,holdings_nav_26jul,api_nav_at_ref,rel_diff,status
+SBI Focused Fund,119727,SBI FOCUSED FUND - Direct Plan - Growth,439.65,439.6501,0.0000,OK
+ICICI Pru US Bluechip Equity Fund,120186,ICICI Prudential US Bluechip Equity Fund - Direct Plan - Growth,85.53,85.53,0.0000,OK
+ICICI Pru Large Cap Fund,120586,ICICI Prudential Large Cap Fund (erstwhile Bluechip Fund) - Direct Plan - Growth,118.38,118.38,0.0000,OK
+Mirae Asset ELSS Tax Saver Fund,135781,Mirae Asset ELSS Tax Saver Fund - Direct Plan - Growth,56.33,56.333,0.0001,OK
+SBI Large Cap Fund,119598,SBI Large Cap Fund - Direct Plan - Growth,102.95,102.9535,0.0000,OK
+Nippon India ELSS Tax Saver Fund,118803,Nippon India ELSS Tax Saver Fund - Direct Plan - Growth Option,129.26,142.8589,0.1052,CHECK_NAV_MISMATCH
+Kotak Flexicap Fund,120166,Kotak Flexi Cap Fund - Direct Plan - Growth,95.5,95.505,0.0001,OK
+Axis Focused Fund,120468,Axis Focused Fund - Direct Plan - Growth Option,62.41,62.41,0.0000,OK
+Canara Rob Large Cap Fund,118269,Canara Robeco Large Cap Fund - Direct Plan - GROWTH OPTION,70.81,70.81,0.0000,OK
+HDFC Nifty 50 Index Fund,119063,HDFC Nifty 50 Index Fund - Direct Plan - Growth Option,232.39,232.3905,0.0000,OK
+HDFC Mid Cap Fund,118989,HDFC Mid Cap Fund - Direct Plan - Growth Option,227.32,227.323,0.0000,OK
+UTI Children's Hybrid Fund,120771,UTI Children's Hybrid Fund - Direct Plan - Growth,40.31,41.2814,0.0241,CHECK_NAV_MISMATCH
+Parag Parikh ELSS Tax Saver Fund,147481,Parag Parikh ELSS Tax Saver Fund - Direct Plan - Growth,31.78,31.779,0.0000,OK
+Parag Parikh Flexi Cap Fund,122639,Parag Parikh Flexi Cap Fund - Direct Plan - Growth,89.78,89.7804,0.0000,OK
+Nippon India Small Cap Fund,118778,Nippon India Small Cap Fund - Direct Plan - Growth Option,200.46,200.4632,0.0000,OK
+SBI Contra Fund,119835,SBI CONTRA FUND - Direct Plan - Growth,410.29,410.2947,0.0000,OK
+Nippon India Multi Cap Fund,118650,Nippon India Multi Cap Fund - Direct Plan - Growth Option,326.93,326.9305,0.0000,OK
+SBI ELSS Tax Saver Fund,119723,SBI ELSS Tax Saver Fund - Direct Plan - Growth,469.57,469.5671,0.0000,OK
+JioBlackRock Flexi Cap Fund,153859,JioBlackRock Flexi Cap Fund - Direct Plan - Growth Option,9.82,9.8161,0.0004,OK
+HDFC Focused Fund,118950,HDFC Focused Fund - Direct Plan - Growth Option,263.17,263.167,0.0000,OK
